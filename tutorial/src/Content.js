@@ -1,11 +1,12 @@
 import React from 'react'
 import { useState } from 'react';
+import { FaTrashAlt } from 'react-icons/fa';
 
 const Content = () => {
   const [items, setItems] = useState([
     {
       id: 1,
-      checked:false,
+      checked: false,
       item: "One false bag of cocoa"
     },
     {
@@ -19,50 +20,34 @@ const Content = () => {
       item: "item 3"
     }
   ]);
-  /* const [name, setname] = useState("Andrei");
-  const [count, setcount] = useState(0); */
-    /* const handlename = () => {
-        let names = ["Andrei", "Mitica", "Gigi"];
-        const int = Math.floor(Math.random()  * 3 );
-        return setname(names[int]);
-    
-    
-      }
-      
-      const handleclick = () => {
-        console.log(count)
-        setcount(count + 1)
-      }
-      const handleclick2 = (name) => {
-        console.log(`${name} was clicked` )
-      }
-      const handleclick3 = (e) => {
-        console.log(e.target.innerText)
-      } */
+  const handleCheck = (id) => {
+    const listItems = items.map((item) => item.id === id ? {... item, checked: !item.checked} :item)
+    setItems(listItems);
+    localStorage.setItem("shopping list", JSON.stringify(listItems));
+  }
+  
   return (
     <main>
       <ul>
         {items.map((item) => (
           <li className='item' key = {item.id}>
-            <input type = "checkbox"
+            <input 
+            onChange={() => handleCheck(item.id)}
+            type = "checkbox"
             checked = {items.checked}
             >
 
             </input>
-            <label> {item.item}</label>
-            <button>Delete</button>
-          </li>
+            <label 
+            style={(item.checked) ? {textDecoration: 'line-through'} : null}
+            onDoubleClick={() => handleCheck(item.id)}
+            > {item.item}</label>
+            <FaTrashAlt role='button' tabIndex="0"/>
+            </li>
         ))}
       </ul>
       
-        {/* /* <p onDoubleClick={handleclick}>
-            Hello {name}!
-            
-        </p>
-        <button className="button" onClick={handlename}>Click me</button>
-        <button className="button" onClick= {() => handleclick()}>Click me</button>
-        <button className="button" onClick= {(e) => handleclick3(e)}>Click me</button>
-        <button onClick ={ () => handleclick2(name)}>Click meeee</button> */ }
+        
         </main>
     
   )

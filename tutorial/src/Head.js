@@ -1,10 +1,13 @@
 import React from 'react'
 
-export const Head = () => {
+export const Head = ( {title} ) => {
   return (
     <header>
-        <h1>Grocery List</h1>
+        <h1> {title} </h1>
     </header>
   )
+}
+Head.defaultProps = {
+  title: "Grocery List"
 }
 export default Head

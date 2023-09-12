@@ -1,5 +1,4 @@
 import React from 'react'
-
 import { FaPlus } from 'react-icons/fa'
 const AddItem = ({newItem, handleSubmit, setnewItem}) => {
   return (

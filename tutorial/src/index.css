@@ -160,7 +160,7 @@ button:hover {
   outline: none;
 }
 
-.searchForm {
+.searchform {
   width: 100%;
   display: flex;
   justify-content: flex-start;
@@ -169,12 +169,12 @@ button:hover {
   border-bottom: 1px solid #eee;
 }
 
-.searchForm label {
+.searchform label {
   position: absolute;
   left: -99999px;
 }
 
-.searchForm input[type='text'] {
+.searchform input[type='text'] {
   flex-grow: 1;
   max-width: 100%;
   min-height: 48px;

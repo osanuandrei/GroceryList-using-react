@@ -2,42 +2,49 @@ import Content from './Content';
 import Head from './Head';
 import Footer from './Footer';
 import AddItem from './AddItem';
+import SearchItem from './SearchItem';
 import { useState } from 'react';
 function App() {
+
+
+  const [search,setSearch] = useState('');
   
-    const [items, setItems] = useState([
-      {
-        id: 1,
-        checked: false,
-        item: "One false bag of cocoa"
-      },
-      {
-        id: 2,
-        checked: false,
-        item: "item 2"
-      },
-      {
-        id: 3,
-        checked: false,
-        item: "item 3"
-      }
-    ]);
+  
+    const [items, setItems] = useState(JSON.parse(localStorage.getItem('shopping list')));
     const [newItem, setnewItem] = useState('');
+
+    const setAndSaveItems = (newItems) => {
+      setItems(newItems);
+      localStorage.setItem("shopping list", JSON.stringify(newItems));
+
+
+    }
+    const addItem = (item) => {
+      const id = items.length ? items[items.length-1].id + 1 : 1;
+      const myNewItem = {id,checked:false, item: newItem}
+      const listItems = [...items, myNewItem];
+      setAndSaveItems(listItems);
+      
+
+    }
     const handleCheck = (id) => {
-      const listItems = items.map((item) => item.id === id ? {... item, checked: !item.checked} :item)
-      setItems(listItems);
-      localStorage.setItem("shopping list", JSON.stringify(listItems));
+      const listItems = items.map((item) => item.id === id ? {...item, checked: !item.checked} :item)
+      setAndSaveItems(listItems);
+      
     }
   
     const handleDelete = (id) => {
       const del = items.filter((item) => item.id !== id )
-      setItems(del);
-      localStorage.setItem("shopping list", JSON.stringify(del));
+      setAndSaveItems(del);
+      
      
       }
       const handleSubmit = (e) => {
         e.preventDefault();
-        console.log("Subbmited");
+        if(!newItem) return;
+        setnewItem('');
+        addItem(newItem);
+
       }
   
   return (
@@ -49,8 +56,12 @@ function App() {
      handleSubmit={handleSubmit}
 
      />
+     <SearchItem 
+     search={search}
+     setSearch={setSearch}/>
+
      <Content
-     items={items}
+     items={items.filter(item => ((item.item).toLowerCase()).includes(search.toLowerCase())) }
      handleDelete={handleDelete}
      handleCheck={handleCheck}
       />

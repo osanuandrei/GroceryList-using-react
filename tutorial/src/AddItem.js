@@ -1,12 +1,12 @@
 import React from 'react'
-import App from './App'
+
 import { FaPlus } from 'react-icons/fa'
 const AddItem = ({newItem, handleSubmit, setnewItem}) => {
   return (
     <form className='addForm' onSubmit={handleSubmit}>
         <label htmlFor='AddItem'>Add Item</label>
         <input 
-        value = {newItem}
+       value={newItem}
         onChange= {(e) => setnewItem(e.target.value)}
         autoFocus
         id='addItem'

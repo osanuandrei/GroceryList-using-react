@@ -4,6 +4,8 @@ import Footer from './Footer';
 import AddItem from './AddItem';
 import SearchItem from './SearchItem';
 import { useState, useEffect } from 'react';
+import apiRequest from './apiRequest';
+import { id } from 'node-xmpp-server/lib/C2S/authentication/Plain';
 function App() {
   const API_URL = "http://localhost:3500/items";
 
@@ -37,17 +39,37 @@ function App() {
     , [])
 
   
-    const addItem = (item) => {
+    const addItem = async (item) => { 
       const id = items.length ? items[items.length-1].id + 1 : 1;
       const myNewItem = {id,checked:false, item: newItem}
       const listItems = [...items, myNewItem];
       setItems(listItems);
-      
 
+      const postOption= {
+        method: "Post",
+        headers: { 'Content-Type' : 'application/json'},
+        body: JSON.stringify(myNewItem)
+        
+      }
+      const result = await apiRequest(API_URL, postOption);
+      if(result) setFetchError(result);
+      
+      
     }
-    const handleCheck = (id) => {
+    
+    const handleCheck = async (id) => {
       const listItems = items.map((item) => item.id === id ? {...item, checked: !item.checked} :item)
       setItems(listItems);
+      const myItem = listItems.filter((item) => item.id === id);
+      const updateOption = {
+        method: "patch" ,
+        headers: { 'Content-Type' : 'application/json'},
+        body: JSON.stringify({checked: myItem[0].checked})
+      };
+    
+      const requestURL = `${API_URL}/${id}`;
+      const result = await apiRequest(requestURL, updateOption);
+      if(result) fetchError(result)
       
     }
   

@@ -3,22 +3,32 @@
     {
       "id": 1,
       "checked": false,
-      "item": "Almonds, Unsalted, in the blue bag"
+      "item": "zacusca"
     },
     {
       "id": 2,
       "checked": false,
-      "item": "Pizza"
+      "item": "cola"
     },
     {
       "id": 3,
       "checked": false,
-      "item": "Bread"
+      "item": "jees"
     },
     {
       "id": 4,
       "checked": false,
-      "item": "cola"
+      "item": "besina"
+    },
+    {
+      "id": 5,
+      "checked": false,
+      "item": "get"
+    },
+    {
+      "id": 6,
+      "checked": false,
+      "item": "da"
     }
   ]
 }

@@ -22,7 +22,6 @@ function App() {
           const response = await fetch(API_URL);
           if(!response.ok ) throw Error("did not receive expected data");
           const listItems = await response.json();
-          console.log(listItems);
           setItems(listItems);
           setFetchError(null);
                 } catch(err) {
@@ -58,24 +57,18 @@ function App() {
     }
     
     const handleCheck = async (id) => {
-      const listItems = items.map((item) => item.id === id ? {...item, checked: !item.checked} :item)
+      const listItems = items.map((item) => item.id === id ? {...item, checked: !item.checked} :item);
       setItems(listItems);
-      const myItem = listItems.filter((item) => item.id === id);
-      const updateOption = {
-        method: "patch" ,
-        headers: { 'Content-Type' : 'application/json'},
-        body: JSON.stringify({checked: myItem[0].checked})
-      };
-    
-      const requestURL = `${API_URL}/${id}`;
-      const result = await apiRequest(requestURL, updateOption);
-      if(result) fetchError(result)
-      
     }
+      
   
-    const handleDelete = (id) => {
+    const handleDelete = async (id) => {
       const del = items.filter((item) => item.id !== id )
       setItems(del);
+      const deleteOption = { method: "DELETE"}
+      const reqURL = `${API_URL}/${id}`;
+      const result = await apiRequest(reqURL, deleteOption)
+      if(result) setFetchError(result)
       
      
       }
